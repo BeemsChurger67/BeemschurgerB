@@ -1,0 +1,13 @@
+import random
+print("")
+print("")
+print("")
+print("")
+print("")
+print("")
+print("main list",random.randint(1,75))
+print("extended list",random.randint(76,150))
+print("main and extended list",random.randint(1,150))
+print("")
+print("decision:", random.randint(1,150))
+print("")

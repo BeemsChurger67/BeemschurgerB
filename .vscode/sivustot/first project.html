@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clicker Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color:rgb(75, 75, 173);
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    button {
+      padding: 10px 10px;
+      font-size: 16px;
+      border-radius: 10000000000000000000px;
+      cursor: pointer;
+    }
+
+    #p {
+      background-color: rgb(100, 100, 255);
+    }
+
+    #m {
+      background-color: rgb(100, 255, 100);
+    }
+
+    #pr {
+      background-color: rgb(255, 100, 255);
+    }
+    
+    #a {
+      background-color: rgb(200,200,200)
+    }
+    
+    #t {
+      background-color: rgb(200,255,200)
+    }
+    #um {
+      background-color: rgb(255, 255, 255)
+    }
+
+    div {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clicker Game</h1>
+  <button id="p" onclick="increasePoints()">Get Points</button>
+  <div id="points">Points: 0.0</div>
+  <button id="m" onclick="upgradeMultiplier()">Multiplier <span id="upgradeCost">10.0</span> points</button>
+  <div id="multiplier">Multiplier: x1.0</div>
+  <button id="pr" onclick="upgradePrestige()">Prestige <span id="prestigeCost">10.0</span> multiplier</button>
+  <div id="prestige">Prestige: x1.0</div>
+  <button id="a" onclick="upgradeAscend()">Ascend <span id="ascendCost">10.0</span> prestige</button>
+  <div id="ascend">Ascend: x1.0</div>
+  <button id="t" onclick="upgradeTranscend()">Transcend <span id="transcendCost">10.0</span> ascend</button>
+  <div id="transcend">Transcend: x1.0</div>
+  <button id="um" onclick="upgradeUltraMultiplier()">Ultra multiply <span id="UltramultiplierCost">10.0</span> ultra multiply</button>
+  <div id="ultramultiplier">Transcend: x1.0</div>
+
+  <script>
+    // Variables for points and multiplier
+    let points = 0;
+    let multiplier = 1;
+    let prestige = 1;
+    let ascend = 1;
+    let transcend = 1;
+    let ultramultiplier = 1;
+    let upgradeCost = 10;
+    let prestigeCost = 10;
+    let ascendCost = 10;
+    let transcendCost = 10;
+    let UltramultiplierCost = 100;
+
+    function formatNumber(num) {
+      const symbols = ['','k', 'Million', 'Billion', 'Trillion', 'Quadrillion', 'Quintillion','Sextillion', 'Septillion', 'Octillion', 'Nonillion', 'Decillion', 'Undecillion','Duodecillion', 'Tredecillion', 'Quattuordecillion', 'Quindecillion', 'Sexdecillion','Septendecillion', 'Octodecillion', 'Novemdecillion', 'Vigintillion', 'Unvigintillion','Duovigintillion', 'Trevigintillion', 'Quattuorvigintillion', 'Quinvigintillion','Sexvigintillion', 'Septenvigintillion', 'Octovigintillion', 'Novemvigintillion','Trigintillion', 'Untrigintillion', 'Duotrigintillion', 'Trestrigintillion','Quattuortrigintillion', 'Quintrigintillion', 'Sextrigintillion', 'Septentrigintillion','Octotrigintillion', 'Novemtrigintillion', 'Quadragintillion', 'Unquadragintillion','Duoquadragintillion', 'Tresquadragintillion', 'Quattuorquadragintillion','Quinquaquadragintillion', 'Sexquadragintillion', 'Septenquadragintillion','Octoquadragintillion', 'Novemquadragintillion', 'Quinquagintillion', 'Unquinquagintillion','Duoquinquagintillion', 'Tresquinquagintillion', 'Quattuorquinquagintillion','Quinquinquagintillion', 'Sexquinquagintillion', 'Septenquinquagintillion','Octoquinquagintillion', 'Novemquinquagintillion', 'Sexagintillion', 'Unsexagintillion','Duosexagintillion', 'Tresexagintillion', 'Quattuorsexagintillion', 'Quinquesexagintillion','Sexsexagintillion', 'Septensexagintillion', 'Octosexagintillion', 'Novemsexagintillion','Septuagintillion', 'Unseptuagintillion', 'Duoseptuagintillion', 'Treseptuagintillion','Quattuorseptuagintillion', 'Quinqueseptuagintillion', 'Sexseptuagintillion','Septenseptuagintillion', 'Octoseptuagintillion', 'Novemseptuagintillion', 'Octogintillion','Unoctogintillion', 'Duooctogintillion', 'Treoctogintillion', 'Quattuoroctogintillion','Quinquaoctogintillion', 'Sexoctogintillion', 'Septemoctogintillion', 'Octooctogintillion','Novemoctogintillion', 'Nonagintillion', 'Unnonagintillion', 'Duononagintillion','Trenonagintillion', 'Quattuornonagintillion', 'Quinquanonagintillion','Sexnonagintillion', 'Septennonagintillion', 'Octononagintillion', 'Novemnonagintillion','alot :skull:'
+];
+      const tier = Math.floor(Math.log10(num) / 3);
+
+      if (tier >= symbols.length) {
+        return 'you beat game';
+      }
+
+      const scaledNum = num / Math.pow(1000, tier);
+      return scaledNum.toFixed(1) + symbols[tier];
+    }
+
+
+
+    // Function to increase points when the button is clicked
+    function increasePoints() {
+      points += multiplier;
+      Update();
+    }
+
+    // Function to upgrade the multiplier
+    function upgradeMultiplier() {
+      if (points >= upgradeCost) {
+        multiplier += points / upgradeCost * prestige;
+        upgradeCost = Math.floor(upgradeCost + points / 2);
+        points = Math.floor(points / upgradeCost);
+        Update();
+      } else {
+        console.log("Not enough points for upgrade!");
+      }
+    }
+
+    // Function to upgrade the prestige
+    function upgradePrestige() {
+      if (multiplier >= prestigeCost) {
+        prestige += multiplier / prestigeCost * ascend;
+        prestigeCost = Math.floor(prestigeCost + multiplier / 10);
+        multiplier = Math.floor(multiplier / prestigeCost);
+        upgradeCost = 10;
+        points = 1;
+        multiplier = 1
+        Update();
+      } else {
+        console.log("Not enough multipliers for prestige upgrade!");
+      }
+    }
+
+    // Function to upgrade the ascend
+    function upgradeAscend() {
+      if (prestige >= ascendCost) {
+        ascend += prestige / ascendCost * transcend;
+        ascendCost = Math.floor(ascendCost + prestige / 10);
+        prestige = Math.floor(prestige / ascendCost);
+        prestigeCost = 10;
+        upgradeCost = 10;
+        points = 1;
+        prestige = 1
+        Update();
+      } else {
+        console.log("Not enough prestige for ascend upgrade!");
+      }
+    }
+  
+    // Function to upgrade the transcend
+    function upgradeTranscend() {
+      if (ascend >= transcendCost) {
+        transcend += ascend / transcendCost;
+        transcendCost = Math.floor(transcendCost + ascend / 10);
+        ascend = Math.floor(ascend / transcendCost);
+        ascendCost = 10;
+        prestigeCost = 10;
+        upgradeCost = 10;
+        points = 1;
+        ascend = 1
+        Update();
+      } else {
+        console.log("Not enough prestige for transcend upgrade!");
+      }
+    }
+
+    // Function to upgrade the transcend
+    function upgradeUltraMultiplier() {
+      if (transcend >= UltramultiplierCost) {
+        transcend += ascend / transcendCost;
+        transcendCost = Math.floor(transcendCost + ascend / 10);
+        ascend = Math.floor(ascend / transcendCost);
+        ascendCost = 10;
+        prestigeCost = 10;
+        upgradeCost = 10;
+        points = 1;
+        ascend = 1
+        Update();
+      } else {
+        console.log("Not enough prestige for transcend upgrade!");
+      }
+    }
+
+    // Calculate bonus points based on current prestige level
+    function calculatePrestigeBonus() {
+      return Math.floor(points * 0.1 * prestige); // Adjust the bonus calculation as needed
+    }
+
+    // Update the displayed values
+    function Update() {
+      document.getElementById("points").textContent = "Points: " + formatNumber(points);
+      document.getElementById("multiplier").textContent = "Multiplier: " + "x" + formatNumber(multiplier);
+      document.getElementById("upgradeCost").textContent = formatNumber(upgradeCost);
+      document.getElementById("prestige").textContent = "Prestige: " + "x" + formatNumber(prestige);
+      document.getElementById("prestigeCost").textContent = formatNumber(prestigeCost);
+      document.getElementById("ascend").textContent = "Ascend: " + "x" + formatNumber(ascend);
+      document.getElementById("ascendCost").textContent = formatNumber(ascendCost);
+      document.getElementById("transcend").textContent = "Transcend: " + "x" + formatNumber(transcend);
+      document.getElementById("transcendCost").textContent = formatNumber(ascendCost);
+    }
+  </script>
+</body>
+</html>
+

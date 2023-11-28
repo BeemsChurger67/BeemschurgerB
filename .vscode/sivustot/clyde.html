@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #clickImage {
+      width: 2000px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://tse1.mm.bing.net/th?id=OIP.-MRzJ9dXa7nCCSOviJ9wNgHaF6&pid=Api&rs=1&c=1&qlt=95&w=148&h=118" id="clickImage" alt="Clickable Image">
+  <script>
+    var clickImage = document.getElementById("clickImage");
+    var imageDisplay = 1
+    clickImage.addEventListener("click", function() {
+      // Define what should happen when the image is clicked
+      imageDisplay += 1
+      alert("Image clicked!");
+      if (imageDisplay == 3);
+        imageDisplay = 1
+    });
+  </script>
+</body>
+</html>
