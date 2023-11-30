@@ -1,0 +1,8 @@
+all of my games ive made here require python 3.11.3 and the following modules
+
+pygame
+os
+ctypes
+ursina
+numpy
+math
